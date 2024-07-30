@@ -15,8 +15,7 @@ namespace SalesWebMVC.Data
         }
 
         public DbSet<Departament> Departament { get; set; } = default!;
-
         public DbSet<Seller> Seller { get; set; } = default!;
-        public DbSet<SalesRecord> SalesRecord { get; set; } = default;
+        public DbSet<SalesRecord> SalesRecord { get; set; } = default!;
     }
 }

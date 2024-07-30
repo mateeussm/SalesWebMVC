@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.CodeDom;
+using System.Collections.Generic;
 
 namespace SalesWebMVC.Models
 {
@@ -8,6 +9,10 @@ namespace SalesWebMVC.Models
         public string Name { get; set; }
         public ICollection<Seller> Sellers { get; set; } = new List<Seller>();
 
+        public Departament()
+        {
+            
+        }
         public Departament(int id, string name)
         {
             Id = id;
