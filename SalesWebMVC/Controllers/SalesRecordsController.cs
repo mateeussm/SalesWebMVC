@@ -48,7 +48,7 @@ namespace SalesWebMVC.Controllers
         public IActionResult Create()
         {
             // Passa os valores do enum OrderStatus para a ViewBag
-            ViewBag.Statuses = Enum.GetValues(typeof(SaleStatus))
+            ViewBag.Status = Enum.GetValues(typeof(SaleStatus))
                            .Cast<SaleStatus>()
                            .Select(e => new SelectListItem
                            {

@@ -11,22 +11,25 @@ namespace SalesWebMVC.Models
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
         public double BaseSalary { get; set; }
+        // Propriedade de chave estrangeira para o departamento
+        public int DepartamentId { get; set; }
         public Departament Departament { get; set; }
-        public ICollection<SalesRecord> Sales { get; set; }
+        public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
 
         public Seller()
         {
 
         }
 
-        public Seller(int id, string name, string email, DateTime birthDate, double baseSalary, Departament departament)
+        public Seller(int id, string name, string email, DateTime birthDate, double baseSalary, int departament, Departament departamentObj)
         {
             Id = id;
             Name = name;
             Email = email;
             BirthDate = birthDate;
             BaseSalary = baseSalary;
-            Departament = departament;
+            DepartamentId = departament;
+            Departament = departamentObj;
         }
 
         public void AddSales(SalesRecord sr)

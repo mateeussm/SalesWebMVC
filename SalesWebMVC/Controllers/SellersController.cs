@@ -50,8 +50,19 @@ namespace SalesWebMVC.Controllers
         {
             // Obtém todos os departamentos para popular o dropdown
             var departments = await _context.Departament.ToListAsync();
-            ViewBag.DepartmentList = new SelectList(departments, "Id", "Name");
 
+            if (departments == null || !departments.Any())
+            {
+                // Lógica para lidar com o caso de não haver departamentos
+                ViewBag.ErrorMessage = "No departments found.";
+                return View();
+            }
+
+            ViewBag.DepartmentList = departments.Select(d => new SelectListItem
+            {
+                Value = d.Id.ToString(), // ID do departamento como valor do item
+                Text = d.Name // Nome do departamento como texto exibido no dropdown
+            }).ToList();
 
             return View();
         }
@@ -63,15 +74,30 @@ namespace SalesWebMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Email,BirthDate,BaseSalary,DepartamentId")] Seller seller)
         {
+            seller.Departament = await _context.Departament.FindAsync(seller.DepartamentId);
             if (ModelState.IsValid)
             {
+                
                 _context.Add(seller);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             // Recarregar a lista de departamentos caso o modelo não seja válido
             var departments = await _context.Departament.ToListAsync();
-            ViewBag.DepartmentList = new SelectList(departments, "Id", "Name");
+
+            if (departments == null || !departments.Any())
+            {
+                // Lógica para lidar com o caso de não haver departamentos
+                ViewBag.ErrorMessage = "No departments found.";
+                return View();
+            }
+
+            ViewBag.DepartmentList = departments.Select(d => new SelectListItem
+            {
+                Value = d.Id.ToString(), // ID do departamento como valor do item
+                Text = d.Name // Nome do departamento como texto exibido no dropdown
+            }).ToList();
+
             return View(seller);
         }
 
