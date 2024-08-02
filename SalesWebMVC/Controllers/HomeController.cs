@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SalesWebMVC.Data;
 using SalesWebMVC.Models;
 using System.Diagnostics;
 
@@ -8,9 +9,19 @@ namespace SalesWebMVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly SeedingService _seedingService;
+
+        public HomeController(ILogger<HomeController> logger, SeedingService seedingService)
         {
+            _seedingService = seedingService;
             _logger = logger;
+        }
+
+        [HttpGet]
+        public IActionResult Seed()
+        {
+            _seedingService.Seed();
+            return Ok("Dados semeados com sucesso!");
         }
 
         public IActionResult Index()
